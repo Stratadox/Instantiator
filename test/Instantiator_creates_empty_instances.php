@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace Stratadox\Instantiator\Test;
 
 use function array_merge;
+use function assert;
 use Exception;
 use InvalidArgumentException;
+use function is_string;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use stdClass;
@@ -85,8 +87,8 @@ class Instantiator_creates_empty_instances extends TestCase
      */
     function either_throwing_an_exception_in_the_constructor_or_correctly_instantiating(
         string $class,
-        string $expectedClass = null,
-        string $expectedMessage = null
+        string $expectedClass = 'N/A',
+        string $expectedMessage = 'N/A'
     ) {
         try {
             $instantiator = Instantiator::forThe($class);
