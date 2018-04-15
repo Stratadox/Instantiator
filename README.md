@@ -1,5 +1,11 @@
 # Instantiator
 
+[![Build Status](https://travis-ci.org/Stratadox/Instantiator.svg?branch=master)](https://travis-ci.org/Stratadox/Instantiator)
+[![Coverage Status](https://coveralls.io/repos/github/Stratadox/Instantiator/badge.svg?branch=master)](https://coveralls.io/github/Stratadox/Instantiator?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Stratadox/Instantiator/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Stratadox/Instantiator/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/stratadox/instantiator/v/stable)](https://packagist.org/packages/stratadox/instantiator)
+[![License](https://poser.pugx.org/stratadox/instantiator/license)](https://packagist.org/packages/stratadox/instantiator)
+
 Lightweight instantiator.
 
 ## Installation
