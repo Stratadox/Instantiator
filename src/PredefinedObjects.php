@@ -23,18 +23,16 @@ class PredefinedObjects implements ProvidesInstances
 
     public function instance()
     {
-        $object = $this->currentObject();
+        if (!isset($this->objects[$this->current])) {
+            throw OutOfObjects::alreadyUsedAllOfThem();
+        }
+        $object = $this->objects[$this->current];
         ++$this->current;
         return $object;
     }
 
     public function class(): string
     {
-        return get_class($this->currentObject());
-    }
-
-    private function currentObject()
-    {
-        return $this->objects[$this->current];
+        return get_class($this->objects[$this->current]);
     }
 }
