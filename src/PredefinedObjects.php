@@ -10,7 +10,7 @@ use function get_class;
  *
  * @author Stratadox
  */
-class PredefinedObjects implements ProvidesInstances
+final class PredefinedObjects implements ProvidesInstances
 {
     private $objects;
     private $current;
