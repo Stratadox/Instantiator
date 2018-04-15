@@ -17,8 +17,8 @@ final class CannotFindTheClass extends InvalidArgumentException implements Canno
     /**
      * Creates a new exception.
      *
-     * @param ReflectionException $exception
-     * @return CannotFindTheClass
+     * @param ReflectionException $exception The exception that was encountered.
+     * @return CannotFindTheClass            The new exception to throw.
      */
     public static function encountered(ReflectionException $exception): self
     {

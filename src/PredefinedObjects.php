@@ -5,6 +5,11 @@ namespace Stratadox\Instantiator;
 
 use function get_class;
 
+/**
+ * Provider for predefined instances.
+ *
+ * @author Stratadox
+ */
 class PredefinedObjects implements ProvidesInstances
 {
     private $objects;
@@ -16,11 +21,18 @@ class PredefinedObjects implements ProvidesInstances
         $this->current = 0;
     }
 
+    /**
+     * Produces a new provider for predefined instances.
+     *
+     * @param mixed ...$objects  The objects to provide.
+     * @return PredefinedObjects The object provider.
+     */
     public static function use(...$objects): self
     {
         return new self(...$objects);
     }
 
+    /** @inheritdoc */
     public function instance()
     {
         if (!isset($this->objects[$this->current])) {
@@ -31,6 +43,7 @@ class PredefinedObjects implements ProvidesInstances
         return $object;
     }
 
+    /** @inheritdoc */
     public function class(): string
     {
         return get_class($this->objects[$this->current]);
