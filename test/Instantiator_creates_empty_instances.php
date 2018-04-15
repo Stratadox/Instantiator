@@ -4,10 +4,8 @@ declare(strict_types=1);
 namespace Stratadox\Instantiator\Test;
 
 use function array_merge;
-use function assert;
 use Exception;
 use InvalidArgumentException;
-use function is_string;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use stdClass;
