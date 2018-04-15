@@ -46,6 +46,9 @@ class PredefinedObjects implements ProvidesInstances
     /** @inheritdoc */
     public function class(): string
     {
+        if (!isset($this->objects[$this->current])) {
+            return '';
+        }
         return get_class($this->objects[$this->current]);
     }
 }
