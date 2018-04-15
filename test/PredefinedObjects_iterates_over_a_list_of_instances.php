@@ -59,4 +59,18 @@ class PredefinedObjects_iterates_over_a_list_of_instances extends TestCase
 
         $instances->instance();
     }
+
+    /** @test */
+    function returning_an_empty_string_when_asked_for_the_class_while_out_of_objects()
+    {
+        $foo = new Foo;
+        $bar = new Bar;
+
+        $instances = PredefinedObjects::use($foo, $bar);
+
+        $instances->instance();
+        $instances->instance();
+
+        $this->assertSame('', $instances->class());
+    }
 }
