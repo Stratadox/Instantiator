@@ -23,6 +23,18 @@ generally does so *for a specific class*.
 In this way it differs from most other instantiator packages, which usually 
 specify the class to instantiate as method parameter.
 
+## Basic usage
+
+```php
+<?php
+use Stratadox\Instantiator\Instantiator
+
+$provideFoo = Instantiator::forThe(Foo::class);
+
+assert($provideFoo->instance() instanceof Foo::class);
+assert(Foo::class === $provideFoo->class());
+```
+
 ## How does it work?
 
 The `Instantiator` class basically just extends `ReflectionClass` in order to
