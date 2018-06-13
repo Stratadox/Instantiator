@@ -14,10 +14,10 @@ interface ProvidesInstances
     /**
      * Makes a new instance of the class, without calling the constructor.
      *
-     * @return mixed|object The object that is instantiated.
+     * @return object The object that is instantiated.
      * @throws CannotInstantiateThis
      */
-    public function instance();
+    public function instance(): object;
 
     /**
      * Informs about the class of the instances that are produced.

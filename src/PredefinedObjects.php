@@ -33,7 +33,7 @@ final class PredefinedObjects implements ProvidesInstances
     }
 
     /** @inheritdoc */
-    public function instance()
+    public function instance(): object
     {
         if (!isset($this->objects[$this->current])) {
             throw OutOfObjects::alreadyUsedAllOfThem();

@@ -45,7 +45,7 @@ final class Instantiator extends ReflectionClass implements ProvidesInstances
     }
 
     /** @inheritdoc */
-    public function instance()
+    public function instance(): object
     {
         try {
             return $this->newInstanceWithoutConstructor();
@@ -60,7 +60,7 @@ final class Instantiator extends ReflectionClass implements ProvidesInstances
         return $this->getName();
     }
 
-    private function newInstanceFromDeserialization()
+    private function newInstanceFromDeserialization(): object
     {
         $class = $this->getName();
         return unserialize(
