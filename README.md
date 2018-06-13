@@ -27,11 +27,11 @@ specify the class to instantiate as method parameter.
 
 ```php
 <?php
-use Stratadox\Instantiator\Instantiator
+use Stratadox\Instantiator\Instantiator;
 
 $provideFoo = Instantiator::forThe(Foo::class);
 
-assert($provideFoo->instance() instanceof Foo::class);
+assert($provideFoo->instance() instanceof Foo);
 assert(Foo::class === $provideFoo->class());
 ```
 
@@ -39,8 +39,9 @@ assert(Foo::class === $provideFoo->class());
 
 The `Instantiator` class basically just extends `ReflectionClass` in order to
 alias its [`newInstanceWithoutConstructor`](http://php.net/manual/en/reflectionclass.newinstancewithoutconstructor.php)
-method. It's basically an adapter for the `ProvidesInstances` interface that's
-implemented through inheritance.
+method.
+In cases where this instantiation method fails, for instance when an final class
+inherits from an internal class, deserialization is used instead.
 
 Alternatively, this module provides a container for `PredefinedObjects`. This
 one isn't really an instantiator, but rather an iterator, but that does not stop
