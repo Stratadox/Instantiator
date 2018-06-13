@@ -14,7 +14,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Stratadox\\Instantiator\\Test\\": "test"
+            "Stratadox\\Instantiator\\Test\\": "tests"
         }
     },
     "require": {
