@@ -5,6 +5,9 @@ namespace Stratadox\Instantiator;
 
 use ReflectionClass;
 use ReflectionException;
+use function sprintf;
+use function strlen;
+use Throwable;
 
 /**
  * Simple Instantiator.
@@ -44,12 +47,25 @@ final class Instantiator extends ReflectionClass implements ProvidesInstances
     /** @inheritdoc */
     public function instance()
     {
-        return $this->newInstanceWithoutConstructor();
+        try {
+            return $this->newInstanceWithoutConstructor();
+        } catch (Throwable $exception) {
+            return $this->newInstanceFromDeserialization();
+        }
     }
 
     /** @inheritdoc */
     public function class(): string
     {
         return $this->getName();
+    }
+
+    private function newInstanceFromDeserialization()
+    {
+        $class = $this->getName();
+        return unserialize(
+            sprintf('O:%d:"%s":0:{}', strlen($class), $class),
+            ['allowed_classes' => [$class]]
+        );
     }
 }

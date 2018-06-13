@@ -16,6 +16,7 @@ use Stratadox\Instantiator\Instantiator;
 use Stratadox\Instantiator\Test\Fixtures\AbstractClass;
 use Stratadox\Instantiator\Test\Fixtures\AnInterface;
 use Stratadox\Instantiator\Test\Fixtures\ExceptionThrowingConstructor;
+use Stratadox\Instantiator\Test\Fixtures\FinalInternal;
 use Stratadox\Instantiator\Test\Fixtures\PrivateClone;
 use Stratadox\Instantiator\Test\Fixtures\PrivateConstructor;
 use Stratadox\Instantiator\Test\Fixtures\PrivateConstructorAndClone;
@@ -111,6 +112,7 @@ class Instantiator_creates_empty_instances extends TestCase
             'an InvalidArgumentException'              => [InvalidArgumentException::class],
             'the built-in stdClass'                    => [stdClass::class],
             'a ReflectionClass'                        => [ReflectionClass::class],
+            'a final internal class'                   => [FinalInternal::class],
         ];
     }
 
