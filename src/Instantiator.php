@@ -35,11 +35,11 @@ final class Instantiator extends ReflectionClass implements ProvidesInstances
     /**
      * Produces a new instantiator.
      *
-     * @param string $class The class to create the instantiator for.
-     * @return Instantiator The instantiator for the class.
+     * @param string $class      The class to create the instantiator for.
+     * @return ProvidesInstances The instantiator for the class.
      * @throws CannotInstantiateThis
      */
-    public static function forThe(string $class): self
+    public static function forThe(string $class): ProvidesInstances
     {
         return new Instantiator($class);
     }
@@ -63,9 +63,10 @@ final class Instantiator extends ReflectionClass implements ProvidesInstances
     private function newInstanceFromDeserialization(): object
     {
         $class = $this->getName();
-        return unserialize(
-            sprintf('O:%d:"%s":0:{}', strlen($class), $class),
-            ['allowed_classes' => [$class]]
-        );
+        return unserialize(sprintf(
+            'O:%d:"%s":0:{}',
+            strlen($class),
+            $class
+        ), ['allowed_classes' => [$class]]);
     }
 }
