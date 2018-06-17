@@ -38,9 +38,7 @@ final class PredefinedObjects implements ProvidesInstances
         if (!isset($this->objects[$this->current])) {
             throw OutOfObjects::alreadyUsedAllOfThem();
         }
-        $object = $this->objects[$this->current];
-        ++$this->current;
-        return $object;
+        return $this->objects[$this->current++];
     }
 
     /** @inheritdoc */
