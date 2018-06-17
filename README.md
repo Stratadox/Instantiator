@@ -18,8 +18,7 @@ The `Instantiator` module provides a most simplistic way of producing empty
 instances.
 
 An object that [`ProvidesInstances`](https://github.com/Stratadox/Instantiator/blob/master/contract/ProvidesInstances.php), 
-generally does so *for a specific class*.
-
+does so *for a specific class*.
 In this way it differs from most other instantiator packages, which usually 
 specify the class to instantiate as method parameter.
 
@@ -40,7 +39,7 @@ assert(Foo::class === $provideFoo->class());
 The `Instantiator` class basically just extends `ReflectionClass` in order to
 alias its [`newInstanceWithoutConstructor`](http://php.net/manual/en/reflectionclass.newinstancewithoutconstructor.php)
 method.
-In cases where this instantiation method fails, for instance when an final class
+In cases where this instantiation method fails, for instance when a final class
 inherits from an internal class, deserialization is used instead.
 
 Alternatively, this module provides a container for `PredefinedObjects`. This
