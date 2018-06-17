@@ -15,7 +15,6 @@ interface ProvidesInstances
      * Makes a new instance of the class, without calling the constructor.
      *
      * @return object The object that is instantiated.
-     * @throws CannotInstantiateThis
      */
     public function instance(): object;
 
