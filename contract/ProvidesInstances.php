@@ -5,8 +5,6 @@ namespace Stratadox\Instantiator;
 /**
  * Produces instances of a class.
  *
- * Such instantiator is generally an instantiator *for a class*.
- *
  * @author Stratadox
  */
 interface ProvidesInstances
@@ -14,7 +12,7 @@ interface ProvidesInstances
     /**
      * Makes a new instance of the class, without calling the constructor.
      *
-     * @return object The object that is instantiated.
+     * @return object A new instance of the class.
      */
     public function instance(): object;
 
