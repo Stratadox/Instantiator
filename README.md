@@ -17,7 +17,7 @@ Install using `composer require stratadox/instantiator`
 The `Instantiator` module provides a most simplistic way of producing empty 
 instances.
 
-An object that [`ProvidesInstances`](https://github.com/Stratadox/Instantiator/blob/master/contract/ProvidesInstances.php), 
+An [`Instantiator`](https://github.com/Stratadox/Instantiator/blob/master/contract/Instantiator.php), 
 does so *for a specific class*.
 In this way it differs from most other instantiator packages, which usually 
 specify the class to instantiate as method parameter.
@@ -36,12 +36,12 @@ assert(Foo::class === $provideFoo->class());
 
 ## How does it work?
 
-The `Instantiator` class basically just extends `ReflectionClass` in order to
-alias its [`newInstanceWithoutConstructor`](http://php.net/manual/en/reflectionclass.newinstancewithoutconstructor.php)
+The `ObjectInstantiator` class basically just extends `ReflectionClass` in order 
+to alias its [`newInstanceWithoutConstructor`](http://php.net/manual/en/reflectionclass.newinstancewithoutconstructor.php)
 method.
 In cases where this instantiation method fails, for instance when a final class
 inherits from an internal class, deserialization is used instead.
 
-Alternatively, this module provides a container for `PredefinedObjects`. This
-one isn't really an instantiator, but rather an iterator, but that does not stop
-it from implementing the `ProvidesInstances` interface.
+Alternatively, this module includes a `PredefinedInstanceProvider`. This one 
+isn't really an instantiator, but rather an iterator, but that does not stop it 
+from implementing the `Instantiator` interface.
