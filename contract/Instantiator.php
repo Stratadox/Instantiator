@@ -7,12 +7,13 @@ namespace Stratadox\Instantiator;
  *
  * @author Stratadox
  */
-interface ProvidesInstances
+interface Instantiator
 {
     /**
      * Makes a new instance of the class, without calling the constructor.
      *
      * @return object A new instance of the class.
+     * @throws InstantiationFailure
      */
     public function instance(): object;
 

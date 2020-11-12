@@ -26,9 +26,9 @@ specify the class to instantiate as method parameter.
 
 ```php
 <?php
-use Stratadox\Instantiator\Instantiator;
+use Stratadox\Instantiator\ObjectInstantiator;
 
-$provideFoo = Instantiator::forThe(Foo::class);
+$provideFoo = ObjectInstantiator::forThe(Foo::class);
 
 assert($provideFoo->instance() instanceof Foo);
 assert(Foo::class === $provideFoo->class());

@@ -9,10 +9,10 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use stdClass;
-use Stratadox\Instantiator\CannotFindTheClass;
-use Stratadox\Instantiator\CannotInstantiateThis;
-use Stratadox\Instantiator\ClassIsAbstract;
-use Stratadox\Instantiator\Instantiator;
+use Stratadox\Instantiator\NoSuchClass;
+use Stratadox\Instantiator\InstantiationFailure;
+use Stratadox\Instantiator\NoConcreteClass;
+use Stratadox\Instantiator\ObjectInstantiator;
 use Stratadox\Instantiator\Test\Fixtures\AbstractClass;
 use Stratadox\Instantiator\Test\Fixtures\AnInterface;
 use Stratadox\Instantiator\Test\Fixtures\ExceptionThrowingConstructor;
@@ -20,14 +20,8 @@ use Stratadox\Instantiator\Test\Fixtures\FinalInternal;
 use Stratadox\Instantiator\Test\Fixtures\PrivateClone;
 use Stratadox\Instantiator\Test\Fixtures\PrivateConstructor;
 use Stratadox\Instantiator\Test\Fixtures\PrivateConstructorAndClone;
-use Stratadox\Instantiator\ThatIsAnInterface;
+use Stratadox\Instantiator\NotAClass;
 
-/**
- * @covers \Stratadox\Instantiator\Instantiator
- * @covers \Stratadox\Instantiator\CannotFindTheClass
- * @covers \Stratadox\Instantiator\ClassIsAbstract
- * @covers \Stratadox\Instantiator\ThatIsAnInterface
- */
 class Instantiator_creates_empty_instances extends TestCase
 {
     /**
@@ -36,9 +30,9 @@ class Instantiator_creates_empty_instances extends TestCase
      */
     function creating_instances_without_calling_the_constructor(string $class)
     {
-        $instance = Instantiator::forThe($class)->instance();
+        $instance = ObjectInstantiator::forThe($class)->instance();
 
-        $this->assertInstanceOf($class, $instance);
+        self::assertInstanceOf($class, $instance);
     }
 
     /**
@@ -47,13 +41,13 @@ class Instantiator_creates_empty_instances extends TestCase
      */
     function creating_a_new_instance_on_each_call(string $class)
     {
-        $instantiator = Instantiator::forThe($class);
+        $instantiator = ObjectInstantiator::forThe($class);
 
         $instance1 = $instantiator->instance();
         $instance2 = $instantiator->instance();
 
-        $this->assertEquals($instance1, $instance2);
-        $this->assertNotSame($instance1, $instance2);
+        self::assertEquals($instance1, $instance2);
+        self::assertNotSame($instance1, $instance2);
     }
 
     /**
@@ -62,7 +56,7 @@ class Instantiator_creates_empty_instances extends TestCase
      */
     function finding_out_which_class_is_instantiated(string $class)
     {
-        $this->assertEquals($class, Instantiator::forThe($class)->class());
+        self::assertEquals($class, ObjectInstantiator::forThe($class)->class());
     }
 
     /**
@@ -71,13 +65,11 @@ class Instantiator_creates_empty_instances extends TestCase
      */
     function throwing_an_invalid_argument_exception_when_the_class_does_not_exist(
         string $class,
-        string $expectedClass,
-        string $expectedMessage
+        string $expectedClass
     ) {
         $this->expectException($expectedClass);
-        $this->expectExceptionMessage($expectedMessage);
 
-        Instantiator::forThe($class);
+        ObjectInstantiator::forThe($class);
     }
 
     /**
@@ -86,18 +78,16 @@ class Instantiator_creates_empty_instances extends TestCase
      */
     function either_throwing_an_exception_in_the_constructor_or_correctly_instantiating(
         string $class,
-        string $expectedClass = 'N/A',
-        string $expectedMessage = 'N/A'
+        string $expectedClass = 'N/A'
     ) {
         try {
-            $instantiator = Instantiator::forThe($class);
-        } catch (CannotInstantiateThis $exception) {
-            $this->assertInstanceOf($expectedClass, $exception);
-            $this->assertEquals($expectedMessage, $exception->getMessage());
+            $instantiator = ObjectInstantiator::forThe($class);
+        } catch (InstantiationFailure $exception) {
+            self::assertInstanceOf($expectedClass, $exception);
             return;
         }
         $instance = $instantiator->instance();
-        $this->assertInstanceOf($class, $instance);
+        self::assertInstanceOf($class, $instance);
     }
 
     public function classes(): array
@@ -121,18 +111,15 @@ class Instantiator_creates_empty_instances extends TestCase
         return [
             'non existing class' => [
                 'non existing class',
-                CannotFindTheClass::class,
-                'Could not create instantiator: Class non existing class does not exist.'
+                NoSuchClass::class
             ],
             'abstract class' => [
                 AbstractClass::class,
-                ClassIsAbstract::class,
-                'Could not create instantiator: Class '.AbstractClass::class.' is abstract.'
+                NoConcreteClass::class
             ],
             'interface' => [
                 AnInterface::class,
-                ThatIsAnInterface::class,
-                'Could not create instantiator: '.AnInterface::class.' is an interface.'
+                NotAClass::class
             ],
         ];
     }

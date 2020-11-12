@@ -5,26 +5,26 @@ namespace Stratadox\Instantiator;
 
 use InvalidArgumentException;
 use ReflectionException;
-use function sprintf as withMessage;
+use function sprintf;
 
 /**
  * Notifies the client code that the class could not be found.
  *
  * @author Stratadox
  */
-final class CannotFindTheClass extends InvalidArgumentException implements CannotInstantiateThis
+final class NoSuchClass extends InvalidArgumentException implements InstantiationFailure
 {
     /**
      * Creates a new exception.
      *
      * @param ReflectionException $exception The exception that was encountered.
-     * @return CannotFindTheClass            The new exception to throw.
+     * @return InstantiationFailure          The new exception to throw.
      */
-    public static function encountered(ReflectionException $exception): self
+    public static function encountered(ReflectionException $exception): InstantiationFailure
     {
-        return new CannotFindTheClass(withMessage(
+        return new self(sprintf(
             'Could not create instantiator: %s.',
             $exception->getMessage()
-        ));
+        ), 0, $exception);
     }
 }

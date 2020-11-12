@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Stratadox\Instantiator;
 
 use InvalidArgumentException;
-use function sprintf as withMessage;
+use function sprintf;
 
 /**
  * Notifies the client code that the class cannot be instantiated because it is
@@ -12,17 +12,17 @@ use function sprintf as withMessage;
  *
  * @author Stratadox
  */
-final class ThatIsAnInterface extends InvalidArgumentException implements CannotInstantiateThis
+final class NotAClass extends InvalidArgumentException implements InstantiationFailure
 {
     /**
      * Creates a new exception.
      *
-     * @param string $class      The class that turns out to be an interface.
-     * @return ThatIsAnInterface The exception to throw.
+     * @param string $class         The class that turns out to be an interface.
+     * @return InstantiationFailure The exception to throw.
      */
-    public static function cannotInstantiate(string $class): self
+    public static function cannotInstantiate(string $class): InstantiationFailure
     {
-        return new ThatIsAnInterface(withMessage(
+        return new self(sprintf(
             'Could not create instantiator: %s is an interface.',
             $class
         ));

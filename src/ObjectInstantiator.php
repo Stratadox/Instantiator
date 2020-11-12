@@ -14,21 +14,21 @@ use Throwable;
  *
  * @author Stratadox
  */
-final class Instantiator extends ReflectionClass implements ProvidesInstances
+final class ObjectInstantiator extends ReflectionClass implements Instantiator
 {
-    /** @throws CannotInstantiateThis */
-    public function __construct(string $class)
+    /** @throws InstantiationFailure */
+    private function __construct(string $class)
     {
         try {
             parent::__construct($class);
         } catch (ReflectionException $exception) {
-            throw CannotFindTheClass::encountered($exception);
+            throw NoSuchClass::encountered($exception);
         }
         if ($this->isAbstract()) {
-            throw ClassIsAbstract::cannotInstantiate($class);
+            throw NoConcreteClass::cannotInstantiate($class);
         }
         if ($this->isInterface()) {
-            throw ThatIsAnInterface::cannotInstantiate($class);
+            throw NotAClass::cannotInstantiate($class);
         }
     }
 
@@ -36,12 +36,12 @@ final class Instantiator extends ReflectionClass implements ProvidesInstances
      * Produces a new instantiator.
      *
      * @param string $class      The class to create the instantiator for.
-     * @return ProvidesInstances The instantiator for the class.
-     * @throws CannotInstantiateThis
+     * @return Instantiator The instantiator for the class.
+     * @throws InstantiationFailure
      */
-    public static function forThe(string $class): ProvidesInstances
+    public static function forThe(string $class): Instantiator
     {
-        return new Instantiator($class);
+        return new ObjectInstantiator($class);
     }
 
     /** @inheritdoc */

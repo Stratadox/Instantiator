@@ -4,15 +4,11 @@ declare(strict_types=1);
 namespace Stratadox\Instantiator\Test;
 
 use PHPUnit\Framework\TestCase;
-use Stratadox\Instantiator\CannotInstantiateThis;
-use Stratadox\Instantiator\PredefinedObjects;
+use Stratadox\Instantiator\InstantiationFailure;
+use Stratadox\Instantiator\PredefinedInstanceProvider;
 use Stratadox\Instantiator\Test\Fixtures\Bar;
 use Stratadox\Instantiator\Test\Fixtures\Foo;
 
-/**
- * @covers \Stratadox\Instantiator\PredefinedObjects
- * @covers \Stratadox\Instantiator\OutOfObjects
- */
 class PredefinedObjects_iterates_over_a_list_of_instances extends TestCase
 {
     /** @test */
@@ -20,10 +16,10 @@ class PredefinedObjects_iterates_over_a_list_of_instances extends TestCase
     {
         $foo1 = new Foo;
         $foo2 = new Foo;
-        $instances = PredefinedObjects::use($foo1, $foo2);
+        $instances = PredefinedInstanceProvider::use($foo1, $foo2);
 
-        $this->assertSame($foo1, $instances->instance());
-        $this->assertSame($foo2, $instances->instance());
+        self::assertSame($foo1, $instances->instance());
+        self::assertSame($foo2, $instances->instance());
     }
 
     /** @test */
@@ -32,13 +28,13 @@ class PredefinedObjects_iterates_over_a_list_of_instances extends TestCase
         $foo = new Foo;
         $bar = new Bar;
 
-        $instances = PredefinedObjects::use($foo, $bar);
+        $instances = PredefinedInstanceProvider::use($foo, $bar);
 
-        $this->assertSame(Foo::class, $instances->class());
-        $this->assertInstanceOf(Foo::class, $instances->instance());
+        self::assertSame(Foo::class, $instances->class());
+        self::assertInstanceOf(Foo::class, $instances->instance());
 
-        $this->assertSame(Bar::class, $instances->class());
-        $this->assertInstanceOf(Bar::class, $instances->instance());
+        self::assertSame(Bar::class, $instances->class());
+        self::assertInstanceOf(Bar::class, $instances->instance());
     }
 
     /** @test */
@@ -47,15 +43,12 @@ class PredefinedObjects_iterates_over_a_list_of_instances extends TestCase
         $foo = new Foo;
         $bar = new Bar;
 
-        $instances = PredefinedObjects::use($foo, $bar);
+        $instances = PredefinedInstanceProvider::use($foo, $bar);
 
         $instances->instance();
         $instances->instance();
 
-        $this->expectException(CannotInstantiateThis::class);
-        $this->expectExceptionMessage(
-            'Out of objects!'
-        );
+        $this->expectException(InstantiationFailure::class);
 
         $instances->instance();
     }
@@ -66,11 +59,11 @@ class PredefinedObjects_iterates_over_a_list_of_instances extends TestCase
         $foo = new Foo;
         $bar = new Bar;
 
-        $instances = PredefinedObjects::use($foo, $bar);
+        $instances = PredefinedInstanceProvider::use($foo, $bar);
 
         $instances->instance();
         $instances->instance();
 
-        $this->assertSame('', $instances->class());
+        self::assertSame('', $instances->class());
     }
 }

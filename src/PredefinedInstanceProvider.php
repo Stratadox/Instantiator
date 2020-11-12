@@ -10,22 +10,22 @@ use function get_class;
  *
  * @author Stratadox
  */
-final class PredefinedObjects implements ProvidesInstances
+final class PredefinedInstanceProvider implements Instantiator
 {
     private $objects;
-    private $current;
+    private $offset;
 
     private function __construct(...$objects)
     {
         $this->objects = $objects;
-        $this->current = 0;
+        $this->offset = 0;
     }
 
     /**
      * Produces a new provider for predefined instances.
      *
-     * @param mixed ...$objects  The objects to provide.
-     * @return PredefinedObjects The object provider.
+     * @param mixed ...$objects           The objects to provide.
+     * @return PredefinedInstanceProvider The object provider.
      */
     public static function use(...$objects): self
     {
@@ -35,18 +35,18 @@ final class PredefinedObjects implements ProvidesInstances
     /** @inheritdoc */
     public function instance(): object
     {
-        if (!isset($this->objects[$this->current])) {
-            throw OutOfObjects::alreadyUsedAllOfThem();
+        if (!isset($this->objects[$this->offset])) {
+            throw NoMoreInstances::listRanOutAt($this->offset);
         }
-        return $this->objects[$this->current++];
+        return $this->objects[$this->offset++];
     }
 
     /** @inheritdoc */
     public function class(): string
     {
-        if (!isset($this->objects[$this->current])) {
+        if (!isset($this->objects[$this->offset])) {
             return '';
         }
-        return get_class($this->objects[$this->current]);
+        return get_class($this->objects[$this->offset]);
     }
 }
