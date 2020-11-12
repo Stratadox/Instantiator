@@ -17,8 +17,8 @@ Install using `composer require stratadox/instantiator`
 The `Instantiator` module provides a most simplistic way of producing empty 
 instances.
 
-An [`Instantiator`](https://github.com/Stratadox/Instantiator/blob/master/contract/Instantiator.php), 
-does so *for a specific class*.
+An [`Instantiator`](https://github.com/Stratadox/Instantiator/blob/master/contract/Instantiator.php) 
+is configured to produce instances *of a specific class*.
 In this way it differs from most other instantiator packages, which usually 
 specify the class to instantiate as method parameter.
 
